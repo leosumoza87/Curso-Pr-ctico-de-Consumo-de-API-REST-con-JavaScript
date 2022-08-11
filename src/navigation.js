@@ -1,5 +1,6 @@
 searchFormBtn.addEventListener('click', () => {
-    location.hash = '#search=';
+    
+    location.hash = '#search=' + searchFormInput.value;
 });
 
 trendingBtn.addEventListener('click', () => {
@@ -7,7 +8,9 @@ trendingBtn.addEventListener('click', () => {
 });
 
 arrowBtn.addEventListener('click', () => {
-    location.hash = '#home';
+    history.back(); 
+    
+    //location.hash = '#home';
 });
 
 window.addEventListener('DOMContentLoaded', navigator, false);
@@ -74,7 +77,8 @@ function trendsPage () {
     genericSection.classList.remove('inactive');
 
     movieDetailSection.classList.add('inactive');
-
+    headerCategoryTitle.innerHTML = "Tendencias"
+    getTrendingMovies();
 }
 function searchPage () {
     console.log('Search¡¡¡');
@@ -83,7 +87,7 @@ function searchPage () {
     arrowBtn.classList.remove('inactive');
     arrowBtn.classList.remove('header-arrow--white');
     headerTitle.classList.add('inactive');
-    headerCategoryTitle.classList.remove('inactive');
+    headerCategoryTitle.classList.add('inactive');
     searchForm.classList.remove('inactive');
 
     trendingPreviewSection.classList.add('inactive');
@@ -93,6 +97,10 @@ function searchPage () {
     genericSection.classList.remove('inactive');
 
     movieDetailSection.classList.add('inactive');
+
+    const [_, query ] = location.hash.split('='); // ['#search', 'busqueda']
+
+    getMoviesBySearch(query);
 
 }
 function movieDetailsPage () {
@@ -112,6 +120,10 @@ function movieDetailsPage () {
     genericSection.classList.add('inactive');
 
     movieDetailSection.classList.remove('inactive');
+
+    const [_, movieId ] = location.hash.split('='); // ['#movie', 'movieId']
+
+    getMovieById(movieId);
 }
 function categoriesPage () {
     console.log('Category¡¡¡');
@@ -134,7 +146,7 @@ function categoriesPage () {
 
     const [_, categoryData ] = location.hash.split('='); // ['category', 'id-name']
 
-    const [categoryId, categoryName] = categoryData.split('-');
+    const [categoryId, categoryName] = categoryData.split('-'); // ['id', 'name']
 
     headerCategoryTitle.innerHTML = categoryName;
     console.log(categoryId);
